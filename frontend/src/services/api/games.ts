@@ -1,4 +1,4 @@
-import { Game, Leaderboard, Score } from "../../models/games";
+import { Game, Leaderboard, Score } from "../../models/games/games";
 import { toUrlParams } from "../../utils/urlParam";
 import { apiService, PaginatedResponse, unwrap } from "../apiService";
 

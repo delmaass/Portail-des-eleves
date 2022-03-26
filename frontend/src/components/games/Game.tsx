@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { Game } from "../../models/games";
+import { Game } from "../../models/games/games";
 import { api, useBetterQuery } from "../../services/apiService";
 import { ErrorPage } from "../utils/ErrorPage";
 import { Loading } from "../utils/Loading";

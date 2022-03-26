@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ShortGame } from "../../models/games";
+import { ShortGame } from "../../models/games/games";
 import { api } from "../../services/apiService";
 import { Sidebar } from "../../utils/Sidebar";
 import { Size } from "../../utils/size";
