@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import pagination
 from rest_framework import mixins, viewsets
 
-from .models import Game
-from .serializers import GameSerializer
+from games.models import Game
+from games.serializers import GameSerializer
 
 
 class GamePagination(pagination.PageNumberPagination):
