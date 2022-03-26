@@ -1,3 +1,4 @@
+import { GameLayout } from "../components/games/Game";
 import { GamesList } from "../components/games/List";
 import { Route } from "./global";
 
@@ -13,4 +14,10 @@ export const routes: GamesRoute[] = [
         exact: true,
         defaultLayout: true,
     },
+    {
+        path: `/:gameId/`,
+        component: GameLayout,
+        exact: true,
+        defaultLayout: true,
+    }
 ];
