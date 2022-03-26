@@ -16,7 +16,8 @@ const Leaderboard = ({gameId} : GameSidebarProps) => (
     <Sidebar title="Leaderboard">
         Work in progress...
     </Sidebar>
-)
+);
+
 const Score = ({user, game, score, when, ...props}: ScoreModel) => (
     <li className="list-group-item list-group-item-action px-0 d-flex align-items-center" {...props}>
         <span className="icon mr-3">
@@ -31,12 +32,12 @@ const Score = ({user, game, score, when, ...props}: ScoreModel) => (
             Score : <b>{score}</b>
         </div>
     </li>
-)
+);
 
 const Scores = ({gameId} : GameSidebarProps) => (
     <Sidebar title="Derniers scores">
         <Pagination
-            apiKey={["api.scores.list"]}
+            apiKey={["api.scores.list", {game: gameId}]}
             apiMethod={api.scores.list}
             render={(scores, paginationControl) => (
                 <>
@@ -50,11 +51,11 @@ const Scores = ({gameId} : GameSidebarProps) => (
             )}
         />
     </Sidebar>
-)
+);
 
 export const GameSidebar = ({gameId} : GameSidebarProps) => (
     <>
-        <Leaderboard/>
-        <Scores/>
+        <Leaderboard gameId={gameId}/>
+        <Scores gameId={gameId}/>
     </>
 ); 

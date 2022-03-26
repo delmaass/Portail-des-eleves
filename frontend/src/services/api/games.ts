@@ -1,4 +1,5 @@
 import { Game, Score } from "../../models/games";
+import { toUrlParams } from "../../utils/urlParam";
 import { apiService, PaginatedResponse, unwrap } from "../apiService";
 
 export const games = {
@@ -7,6 +8,8 @@ export const games = {
 };
 
 export const scores = {
-  list: () =>
-    unwrap<PaginatedResponse<Score[]>>(apiService.get(`/games/scores/`)),
+  list: (params) =>
+    unwrap<PaginatedResponse<Score[]>>(
+      apiService.get(`/games/scores/${toUrlParams({ ...params })}`)
+    ),
 };

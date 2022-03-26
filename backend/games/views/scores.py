@@ -35,4 +35,4 @@ class ScoreViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ScoreSerializer
     pagination_class = ScorePagination
     permission_classes = [IsAuthenticated]
-    ordering = ["when"]
+    ordering = ["-when"]
