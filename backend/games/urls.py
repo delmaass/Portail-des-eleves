@@ -10,7 +10,7 @@ router = BulkRouter()
 
 # Associations.
 router.register(r"scores", ScoreViewSet)
-router.register(r"", GameViewSet)
+router.register(r"game", GameViewSet)
 
 urlpatterns = []
 urlpatterns += router.urls
