@@ -20,20 +20,3 @@ class Score(models.Model):
     )
 
     when = models.DateTimeField(verbose_name="when", auto_now_add=True, blank=True)
-
-
-class Leaderboard(models.Model):
-    game = models.ForeignKey(
-        Game, verbose_name="game", on_delete=models.CASCADE, related_name="leaderboard"
-    )
-
-    user = models.ForeignKey(
-        User, verbose_name="user", on_delete=models.CASCADE, related_name="leaderboard"
-    )
-
-    highest_score = models.ForeignKey(
-        Score,
-        verbose_name="highest_score",
-        on_delete=models.CASCADE,
-        related_name="leaderboard",
-    )

@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from django.core.validators import MinValueValidator
 from authentication.models.user import User
+from authentication.serializers.user_short import UserShortSerializer
 from games.serializers.game import ShortGameSerializer
 from games.models.game import Game
 from games.models import Score
@@ -15,3 +17,11 @@ class ScoreSerializer(serializers.ModelSerializer):
         model = Score
         read_only_fields = ("when",)
         fields = ("game", "user", "score") + read_only_fields
+
+
+class LeaderboardSerializer(serializers.Serializer):
+    user = serializers.CharField()
+    total_score = serializers.IntegerField(validators=[MinValueValidator(0)])
+
+    class Meta:
+        fields = ("user", "total_score")

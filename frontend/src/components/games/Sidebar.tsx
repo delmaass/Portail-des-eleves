@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Score as ScoreModel } from "../../models/games";
-import { api, useBetterPaginatedQuery } from "../../services/apiService";
+import { api } from "../../services/apiService";
 import { Sidebar } from "../../utils/Sidebar";
 import { Size } from "../../utils/size";
 import { UserAvatar } from "../utils/avatar/UserAvatar";
-import { ErrorPage } from "../utils/ErrorPage";
-import { Loading } from "../utils/Loading";
 import { Pagination } from "../utils/Pagination";
 
 interface GameSidebarProps {
