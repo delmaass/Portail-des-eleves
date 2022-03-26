@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { api } from "../../services/apiService";
 import { PageTitle } from "../utils/PageTitle";
 import { Pagination } from "../utils/Pagination";
-import { LeaderboardSidebar } from "./Sidebar";
+import { GameSidebar } from "./Sidebar";
 import './games.css';
 
 export const GamesList = () => (
     <Container className="mt-5">
     <Row>
         <Col md="3">
-            <LeaderboardSidebar />
+            <GameSidebar />
         </Col>
         <Col md="9">
             <PageTitle>Jeux</PageTitle>

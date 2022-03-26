@@ -27,7 +27,7 @@ import { loans } from "./api/library/loans";
 import { elections } from "./api/elections";
 import { subscriptions } from "./api/subscriptions";
 import { library } from "./api/library/library";
-import { games } from "./api/games";
+import { games, scores } from "./api/games";
 
 export const baseUrl = "http://localhost:8000";
 const baseApi = baseUrl + "/api/v1";
@@ -75,6 +75,7 @@ export const api = {
   namespaces: namespaces,
 
   games: games,
+  scores: scores,
 
   jwt: jwt,
   users: users,

@@ -6,7 +6,7 @@ import { api, useBetterQuery } from "../../services/apiService";
 import { ErrorPage } from "../utils/ErrorPage";
 import { Loading } from "../utils/Loading";
 import { PageTitle } from "../utils/PageTitle";
-import { LeaderboardSidebar } from "./Sidebar";
+import { GameSidebar } from "./Sidebar";
 
 export const GameLayout = () => {
     const { gameId } = useParams<{ gameId: string }>();
@@ -27,7 +27,7 @@ export const GameLayout = () => {
         <Container className="mt-5">
             <Row>
                 <Col md="3">
-                    <LeaderboardSidebar gameId={game.id}/>
+                    <GameSidebar gameId={game.id}/>
                 </Col>
                 <Col md="9">
                     <PageTitle>{game.name}</PageTitle>
