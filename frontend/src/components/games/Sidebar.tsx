@@ -17,16 +17,16 @@ const Leaderboard = ({gameId} : GameSidebarProps) => (
         Work in progress...
     </Sidebar>
 )
-const Score = ({userId, gameId, gameName, score, when, ...props}: ScoreModel) => (
+const Score = ({user, game, score, when, ...props}: ScoreModel) => (
     <li className="list-group-item list-group-item-action px-0 d-flex align-items-center" {...props}>
         <span className="icon mr-3">
             <UserAvatar
-                userId={userId}
+                userId={user}
                 size={Size.Medium}
             />
         </span>
         <div>
-            <b>{userId}</b> à <b>{gameName}</b>
+            <b>{user}</b> à <b>{game.name}</b>
             <br/>
             Score : <b>{score}</b>
         </div>
@@ -42,7 +42,7 @@ const Scores = ({gameId} : GameSidebarProps) => (
                 <>
                 {console.log(scores)}
                 {scores.map((score, idx) => (
-                    <Score key={idx} gameId={score.gameId} gameName={score.gameName} userId={score.user} score={score.score} when={score.when} /> 
+                    <Score key={idx} user={score.user} game={score.game} score={score.score} when={score.when} /> 
                 ))
                 }
                 {paginationControl}

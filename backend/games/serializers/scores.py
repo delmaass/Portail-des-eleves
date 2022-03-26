@@ -1,13 +1,12 @@
 from rest_framework import serializers
 from authentication.models.user import User
+from games.serializers.game import ShortGameSerializer
 from games.models.game import Game
-from games.models import Score, Leaderboard
+from games.models import Score
 
 
 class ScoreSerializer(serializers.ModelSerializer):
-    game = serializers.PrimaryKeyRelatedField(
-        queryset=Game.objects.all(), many=False, read_only=False
-    )
+    game = ShortGameSerializer()
     user = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(), many=False, read_only=False
     )

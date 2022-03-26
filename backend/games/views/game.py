@@ -30,3 +30,4 @@ class GameViewSet(
     serializer_class = GameSerializer
     pagination_class = GamePagination
     permission_classes = [IsAuthenticated]
+    ordering = ["pub_date"]

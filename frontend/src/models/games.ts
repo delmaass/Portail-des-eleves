@@ -6,10 +6,14 @@ export interface Game {
   pub_date: Date;
 }
 
+export interface ShortGame {
+  id: string;
+  name: string;
+}
+
 export interface Score {
-  userId: string;
-  gameId: string;
-  gameName: string;
+  user: string;
+  game: ShortGame;
   score: number;
   when: Date;
 }
