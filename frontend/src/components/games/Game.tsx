@@ -6,6 +6,7 @@ import { api, useBetterQuery } from "../../services/apiService";
 import { ErrorPage } from "../utils/ErrorPage";
 import { Loading } from "../utils/Loading";
 import { PageTitle } from "../utils/PageTitle";
+import { Pictionary } from "./pictionary/Pictionary";
 import { GameSidebar } from "./Sidebar";
 
 export const GameLayout = () => {
@@ -31,7 +32,9 @@ export const GameLayout = () => {
                 </Col>
                 <Col md="9">
                     <PageTitle>{game.name}</PageTitle>
-                    GameContainer
+                    {game.id === "pictionary" ? (
+                        <Pictionary/>
+                    ) : ""}
                 </Col>
             </Row>
         </Container>
