@@ -17,3 +17,8 @@ export interface Score {
   score: number;
   when: Date;
 }
+
+export interface Leaderboard {
+  user: string;
+  totalScore: number;
+}
