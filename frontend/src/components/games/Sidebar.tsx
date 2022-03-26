@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Score as ScoreModel } from "../../models/games";
 import { api, useBetterPaginatedQuery } from "../../services/apiService";
 import { Sidebar } from "../../utils/Sidebar";
@@ -20,14 +21,14 @@ const Leaderboard = ({gameId} : GameSidebarProps) => (
 
 const Score = ({user, game, score, when, ...props}: ScoreModel) => (
     <li className="list-group-item list-group-item-action px-0 d-flex align-items-center" {...props}>
-        <span className="icon mr-3">
+        <Link to={"/profils/" + user}><span className="icon mr-3">
             <UserAvatar
                 userId={user}
                 size={Size.Medium}
             />
-        </span>
+        </span></Link>
         <div>
-            <b>{user}</b> à <b>{game.name}</b>
+            <b>{user}</b>{game ? (<> à <Link to={"/games/" + game.id} className="text-black"><b>{game.name}</b></Link></>) : ""}
             <br/>
             Score : <b>{score}</b>
         </div>
@@ -43,7 +44,7 @@ const Scores = ({gameId} : GameSidebarProps) => (
                 <>
                 {console.log(scores)}
                 {scores.map((score, idx) => (
-                    <Score key={idx} user={score.user} game={score.game} score={score.score} when={score.when} /> 
+                    <Score key={idx} user={score.user} game={gameId ? "" : score.game} score={score.score} when={score.when} /> 
                 ))
                 }
                 {paginationControl}
