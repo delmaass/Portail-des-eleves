@@ -26,8 +26,8 @@ export const GamesList = () => (
                     <Card.Header className="overflow-hidden img-preview">
                         <Card.Img
                             variant="top"
-                            // src="https://upload.wikimedia.org/wikipedia/commons/8/83/2048_Monotonicity.png"
-                            className="img-fluid"
+                            src={`/games/${game.id}.jpg`}
+                            className="w-100 img-fluid"
                         />
                     </Card.Header>
                     <Card.Body>
