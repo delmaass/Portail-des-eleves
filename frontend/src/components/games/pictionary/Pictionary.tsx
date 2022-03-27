@@ -2,50 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { GameService } from "./GameService";
 import { PlayerList } from "./lobby/PlayerList";
-
-const initialPlayer = {
-    id: "20delmas",
-    name: "20delmas",
-    isReady: false,
-    score: 0
-}
-
-const playerList = [
-    initialPlayer,
-    {
-        id: "17bocquet",
-        ready: true
-    }
-];
+import { Player } from "../../../models/games/pictionary";
+import { Loading } from "../../utils/Loading";
 
 export const Pictionary = () => {
-    const gameService = new GameService(initialPlayer);
-    const [player, setPlayer] = useState(initialPlayer);
-    const [players, setPlayers] = useState(playerList);
+    const gameService = new GameService({});
+    const [player, setPlayer] = useState<Player>();
+    const [players, setPlayers] = useState();
     const [gameMessage, setGameMessage] = useState("");
-
-    const setUsername = (name) => {
-        gameService.setUsername(name);
-        setPlayer({
-            ...player,
-            name: name
-        });
-    } 
     
     const onReady = () => {
         gameService.ready();
-        setPlayer({
-            ...player,
-            isReady: true
-        })
     }
 
     useEffect(() => {
         gameService.getPlayerList().subscribe(players => setPlayers(players));
+        gameService.getPlayer().subscribe(player => setPlayer(player));
         gameService.onReceiveStatusMessage().subscribe((message: string) => setGameMessage(message));
-    })
+    }, [])
 
-    return (
+    return player ? (
         <Container className="border rounded-3 border-black p-5">
             <Button
                 variant={player.isReady ? "info" : "primary"}
@@ -56,5 +32,7 @@ export const Pictionary = () => {
             </Button>
             <PlayerList playerList={players}/>
         </Container>
+    ) : (
+        <Loading/>
     )
 }

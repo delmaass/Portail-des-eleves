@@ -59,38 +59,45 @@ module.exports = class Game {
     return this.game.isPlaying;
   }
 
-  newUser() {
-    this.users.addUser(this.socket.id);
-    this.user = this.users.find(this.socket.id);
+  newUser(id) {
+    this.users.addUser(id);
+    this.userId = id;
   }
 
   onSetUsername(name) {
     this.user.name = name;
-    this.socket.emit('game:user', this.user);
     this.io.emit('game:userList', this.users.getUserList());
+  }
+
+  onUser() {
+    const user = this.users.find(this.userId);
+    this.socket.emit('game:user', user);
   }
 
   onUserList() {
     this.socket.emit('game:userList', this.users.getUserList());
   }
 
-  ready() {
-    this.user.isReady = true;
+  switchReady() {
+    this.users.switchReady(this.userId);
     this.checkReadyStatus();
     this.io.emit('game:userList', this.users.getUserList());
   }
 
-  userQuit() {
-    let user = this.users.find(this.socket.id);
-    if (this.users.getUserList().length === 0) {
-      this.gameEnd();
+  userQuit(id) {
+    const user = this.users.find(id);
+
+    if(user) {
+      if (this.users.getUserList().length === 0) {
+        this.gameEnd();
+      }
+      if (this.game.drawer === user) {
+        this.io.emit('game:end', { message: 'Drawer has left the game' });
+        this.gameEnd();
+      }
+      this.users.removeUser(id);
+      this.io.emit('game:userList', this.users.getUserList());
     }
-    if (this.game.drawer === user) {
-      this.io.emit('game:end', { message: 'Drawer has left the game' });
-      this.gameEnd();
-    }
-    this.users.removeUser(this.socket.id);
-    this.io.emit('game:userList', this.users.getUserList());
   }
 
 

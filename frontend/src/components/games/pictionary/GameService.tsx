@@ -22,24 +22,13 @@ class SocketService extends React.Component {
 }
 
 export class GameService extends SocketService {
-    state: { player: Player; };
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            player: props.player
-        };
-
-        this.socket.on('game:user', (player: Player) => this.updatePlayer(player));
-    }
-
-    updatePlayer(player: Player) {
-        this.setState({...this.state, player: player});
-    }
-
     changeList(list: string) {
         this.socket.emit('game:useList', list);
+    }
+
+    getPlayer() {
+        this.socket.emit('game:user');
+        return super.toObservable('game:user');
     }
 
     getPlayerList() {

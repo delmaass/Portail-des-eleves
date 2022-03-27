@@ -37,7 +37,7 @@ TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 ALLOWED_HOSTS = ["localhost"] + [env.str("PORTAIL_HOSTNAME")] + ["127.0.0.1"]
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+CORS_ORIGIN_WHITELIST = ("http://localhost:3000","http://localhost:3001")
 
 AUTH_USER_MODEL = "authentication.User"
 

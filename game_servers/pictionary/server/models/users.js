@@ -8,18 +8,21 @@ class Users {
     this.drawerIndex = 0;
   }
 
-  addUser(socketId) {
-    this.users[socketId] = new User(socketId);
+  addUser(id) {
+    this.users[id] = new User(id);
   };
 
-  removeUser(socketId) {
-    this.users[socketId].deleteUser();
-    delete this.users[socketId];
+  removeUser(id) {
+    delete this.users[id];
   };
 
-  find(socketId) {
-    return this.users[socketId];
+  find(id) {
+    return this.users[id];
   };
+
+  switchReady(id) {
+    this.users[id].isReady = !this.users[id].isReady;
+  }
 
   nextDrawer() {
     let list = this.getUserList();
