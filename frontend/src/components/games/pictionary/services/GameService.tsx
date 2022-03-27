@@ -1,31 +1,12 @@
-import * as io from 'socket.io-client';
-import { Observable, Subscriber } from "rxjs";
-import { Player } from '../../../models/games/pictionary';
-import React from 'react';
-
-const PICTIONARY_SERVER_URL = "http://localhost:3001/";
-
-class SocketService extends React.Component {
-    socket: any;
-
-    constructor(props) {
-        super(props);
-
-        this.socket = io.connect(PICTIONARY_SERVER_URL);
-    }
-
-    disconnect() {
-        this.socket.emit("disconnect");
-    }
-
-    toObservable(eventName: string): Observable<any> {
-        return new Observable((subscriber: Subscriber<any>) => {
-          this.socket.on(eventName, (data) => subscriber.next(data));
-        });
-    }
-}
+import { SocketService } from "./SocketService";
 
 export class GameService extends SocketService {
+    constructor(socketService) {
+        super(socketService)
+
+        this.socket = socketService.socket;
+    }
+
     changeList(list: string) {
         this.socket.emit('game:useList', list);
     }
@@ -41,6 +22,11 @@ export class GameService extends SocketService {
 
     onGameStart() {
         return super.toObservable('game:start');
+    }
+
+    isPlaying() {
+        this.socket.emit('game:isPlaying');
+        return super.toObservable('game:isPlaying');
     }
 
     onReceiveAnswer() {

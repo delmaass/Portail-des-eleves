@@ -9,11 +9,9 @@ class Users {
   }
 
   addUser(socketId, userId) {
-    const doublonSocketId = this.findUser(userId);
-    if(doublonSocketId) {
-      delete this.users[doublonSocketId];
-    }
-    this.users[socketId] = new User(userId);
+    if(!this.findUser(userId)) {
+      this.users[socketId] = new User(userId);
+    };
   };
 
   removeUser(socketId) {
@@ -34,7 +32,7 @@ class Users {
   }
 
   nextDrawer() {
-    let list = this.getUserList();
+    let list = Object.keys(this.users);
     let drawer = list[this.drawerIndex];
     this.drawerIndex += 1;
     if (this.drawerIndex === list.length) this.drawerIndex = 0;

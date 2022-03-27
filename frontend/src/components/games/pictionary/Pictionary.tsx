@@ -1,51 +1,50 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
-import { GameService } from "./GameService";
-import { PlayerList } from "./lobby/PlayerList";
-import { Player } from "../../../models/games/pictionary";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { Loading } from "../../utils/Loading";
-import { UserContext } from "../../../services/authService";
-import "./pictionary.css";
+import { Game } from "./game/Game";
+import { GameService } from "./services/GameService";
+import { Lobby } from "./lobby/Lobby";
+import { SocketService } from "./services/SocketService";
+import { PaperService } from "./services/PaperService";
 
+let socketService;
 let gameService;
+let paperService;
 
 export const Pictionary = () => {
-    const [players, setPlayers] = useState<Player[] | null>(null);
-    const [gameMessage, setGameMessage] = useState("");
-    const user = useContext(UserContext);
-
-    const onReady = () => {
-        gameService.ready();
-    };
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [answer, setAnswer] = useState("");
+    const [time, setTime] = useState(0);
+    const [drawer, setDrawer] = useState(false);
 
     useEffect(() => {
-        gameService = new GameService({});
-        gameService.onReceiveStatusMessage().subscribe((message: string) => setGameMessage(message));
-        gameService.getPlayerList().subscribe(players => setPlayers(players));
+        socketService = new SocketService({});
+        gameService = new GameService(socketService);
+        paperService = new PaperService(socketService);
+
+        gameService.isPlaying().subscribe((play: boolean) => setIsPlaying(play));
+        gameService.onGameStart().subscribe(() => setIsPlaying(true));
+
+        gameService.onReceiveAnswer().subscribe((answer) => setAnswer(answer));
+        gameService.timeLeft().subscribe((time) => setTime(time));
+
+        paperService.isDrawer().subscribe(() => setDrawer(true));
 
         return () => {
-            gameService.disconnect();
+            socketService.disconnect();
+            socketService = null;
             gameService = null;
+            paperService = null;
         }
-    }, []);
-
-    const isReady = players && user ? players.filter(player => player.id == user.id)[0].isReady : false;
-
-    return players && user ? (
-        <Container className="border rounded-3 border-black p-5">
-            <Container className="game-container">
-                <Button
-                    variant={isReady ? "info" : "primary"}
-                    className="d-flex m-auto"
-                    onClick={onReady}
-                >
-                    {isReady ? "En attente des autres joueurs..." : "Prêt !"}
-                </Button>
-                <p className="position-absolute">{gameMessage}</p>
-            </Container>
-            <PlayerList playerList={players}/>
-        </Container>
+    }, [])
+    
+    return gameService ? (
+        isPlaying ? (
+            <Game answer={answer} timeLeft={time} isDrawer={drawer} paperService={paperService} />
+        ) : (
+            <Lobby gameService={gameService}/>
+        )
     ) : (
         <Loading/>
-    )
+    );
 }

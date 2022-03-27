@@ -53,7 +53,7 @@ io.use(function(socket, next){
   });
   socket.on('game:userList', () => game.onUserList());
   socket.on('game:useList', (list) => game.useList(list));
-
+  socket.on('game:isPlaying', () => game.onIsPlaying());
   socket.on('game:ready', () => {
     game.switchReady();
     if (game.isPlaying()) {

@@ -5,7 +5,7 @@ class Game {
 
   constructor() {
     this.answer = '';
-    this.drawer = {};
+    this.drawer = '';
     this.useList = 'regular';
     this._wordList = {
       regular: [
@@ -53,7 +53,7 @@ class Game {
   _gameTimeout(endCb) {
     this.timeout = setTimeout(() => {
       endCb();
-    }, this._TIME);
+    }, this._TIME + 1000);
 
   }
 
