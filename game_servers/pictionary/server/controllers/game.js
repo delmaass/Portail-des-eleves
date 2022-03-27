@@ -20,11 +20,11 @@ module.exports = class Game {
 
   checkReadyStatus() {
     if (this.users.allReady() && !this.isPlaying() && this.users.getUserList().length <= 1) {
-      this.socket.emit('game:status', 'Game will start when there are 2 or more players');
+      this.io.emit('game:status', 'Le jeu commencera quand il y aura 2 joueurs ou plus');
     }
 
     if (!this.users.allReady() && !this.isPlaying()) {
-      this.io.emit('game:status', 'Waiting for everyone to get ready');
+      this.io.emit('game:status', 'Le jeu commence quand tout le monde est prêt');
     }
   }
 
@@ -66,7 +66,7 @@ module.exports = class Game {
 
   onSetUsername(name) {
     this.user.name = name;
-    this.io.emit('game:userList', this.users.getUserList());
+    this.io.emit('game:userList', this.users.getUserList(this.userId));
   }
 
   onUser() {
@@ -75,13 +75,13 @@ module.exports = class Game {
   }
 
   onUserList() {
-    this.socket.emit('game:userList', this.users.getUserList());
+    this.socket.emit('game:userList', this.users.getUserList(this.userId));
   }
 
   switchReady() {
     this.users.switchReady(this.userId);
     this.checkReadyStatus();
-    this.io.emit('game:userList', this.users.getUserList());
+    this.io.emit('game:userList', this.users.getUserList(this.userId));
   }
 
   userQuit(id) {

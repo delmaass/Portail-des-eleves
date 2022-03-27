@@ -56,7 +56,6 @@ io.use(function(socket, next){
   socket.on('game:setUsername', (name) => {
     return game.onSetUsername(name);
   });
-  socket.on('game:user', () => game.onUser());
   socket.on('game:userList', () => game.onUserList());
   socket.on('game:useList', (list) => game.useList(list));
 

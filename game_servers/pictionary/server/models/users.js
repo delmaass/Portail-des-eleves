@@ -32,8 +32,20 @@ class Users {
     return drawer;
   };
 
-  getUserList() {
-    return R.values(this.users);
+  getUserList(id) {
+    // First user of the list should have this id if mentioned
+    let userList = []
+    if(id) {
+      userList.push(this.users[id]);
+      Object.keys(this.users).map((key) => {
+        if(key != id) {
+          userList.push(this.users[id]);
+        }
+      })
+    } else {
+      userList = R.values(this.users);
+    }
+    return userList;
   };
 
   allReady() {

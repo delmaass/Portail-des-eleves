@@ -26,11 +26,6 @@ export class GameService extends SocketService {
         this.socket.emit('game:useList', list);
     }
 
-    getPlayer() {
-        this.socket.emit('game:user');
-        return super.toObservable('game:user');
-    }
-
     getPlayerList() {
         this.socket.emit('game:userList');
         return super.toObservable('game:userList');

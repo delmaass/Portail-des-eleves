@@ -4,32 +4,34 @@ import { GameService } from "./GameService";
 import { PlayerList } from "./lobby/PlayerList";
 import { Player } from "../../../models/games/pictionary";
 import { Loading } from "../../utils/Loading";
+import "./pictionary.css";
 
 export const Pictionary = () => {
     const gameService = new GameService({});
-    const [player, setPlayer] = useState<Player>();
-    const [players, setPlayers] = useState();
+    const [players, setPlayers] = useState<Player[] | null>(null);
     const [gameMessage, setGameMessage] = useState("");
-    
+
     const onReady = () => {
         gameService.ready();
-    }
+    };
 
     useEffect(() => {
-        gameService.getPlayerList().subscribe(players => setPlayers(players));
-        gameService.getPlayer().subscribe(player => setPlayer(player));
         gameService.onReceiveStatusMessage().subscribe((message: string) => setGameMessage(message));
+        gameService.getPlayerList().subscribe(players => setPlayers(players));
     }, [])
 
-    return player ? (
+    return players && players[0] ? (
         <Container className="border rounded-3 border-black p-5">
-            <Button
-                variant={player.isReady ? "info" : "primary"}
-                className="d-flex mx-auto my-8"
-                onClick={onReady}
-            >
-                {player.isReady ? "En attente des autres joueurs..." : "Prêt !"}
-            </Button>
+            <Container className="game-container">
+                <Button
+                    variant={players[0].isReady ? "info" : "primary"}
+                    className="d-flex m-auto"
+                    onClick={onReady}
+                >
+                    {players[0].isReady ? "En attente des autres joueurs..." : "Prêt !"}
+                </Button>
+                <p className="position-absolute">{gameMessage}</p>
+            </Container>
             <PlayerList playerList={players}/>
         </Container>
     ) : (

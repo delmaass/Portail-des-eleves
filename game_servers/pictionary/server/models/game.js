@@ -19,6 +19,7 @@ class Game {
     };
     this._wordsGen = this.createGenerator(this._wordList);
     this._TIME = 60000;
+    this.isPlaying = false;
   }
 
   end() {
