@@ -4,6 +4,8 @@ module.exports = class Game {
   constructor(io, socket) {
     this.users = UsersInstance();
     this.game = GameInstance();
+    this.userToSocket = {};
+    this.socketToUser = {};
     this.io = io;
     this.socket = socket;
   }
@@ -60,44 +62,37 @@ module.exports = class Game {
   }
 
   newUser(id) {
-    this.users.addUser(id);
-    this.userId = id;
+    this.users.addUser(this.socket.id, id);
+    this.user = this.users.find(this.socket.id);
   }
 
   onSetUsername(name) {
     this.user.name = name;
-    this.io.emit('game:userList', this.users.getUserList(this.userId));
-  }
-
-  onUser() {
-    const user = this.users.find(this.userId);
-    this.socket.emit('game:user', user);
+    this.io.emit('game:userList', this.users.getUserList());
   }
 
   onUserList() {
-    this.socket.emit('game:userList', this.users.getUserList(this.userId));
+    this.io.emit('game:userList', this.users.getUserList());
   }
 
   switchReady() {
-    this.users.switchReady(this.userId);
+    this.user.isReady = !this.user.isReady;
     this.checkReadyStatus();
-    this.io.emit('game:userList', this.users.getUserList(this.userId));
+    this.io.emit('game:userList', this.users.getUserList());
   }
 
-  userQuit(id) {
-    const user = this.users.find(id);
-
-    if(user) {
-      if (this.users.getUserList().length === 0) {
-        this.gameEnd();
-      }
-      if (this.game.drawer === user) {
-        this.io.emit('game:end', { message: 'Drawer has left the game' });
-        this.gameEnd();
-      }
-      this.users.removeUser(id);
-      this.io.emit('game:userList', this.users.getUserList());
+  userQuit() {
+    let user = this.users.find(this.socket.id);
+    
+    if (this.users.getUserList().length === 0) {
+      this.gameEnd();
     }
+    if (this.game.drawer === user) {
+      this.io.emit('game:end', { message: 'Drawer has left the game' });
+      this.gameEnd();
+    }
+    this.users.removeUser(this.socket.id);
+    this.io.emit('game:userList', this.users.getUserList());
   }
 
 

@@ -8,20 +8,29 @@ class Users {
     this.drawerIndex = 0;
   }
 
-  addUser(id) {
-    this.users[id] = new User(id);
+  addUser(socketId, userId) {
+    const doublonSocketId = this.findUser(userId);
+    if(doublonSocketId) {
+      delete this.users[doublonSocketId];
+    }
+    this.users[socketId] = new User(userId);
   };
 
-  removeUser(id) {
-    delete this.users[id];
+  removeUser(socketId) {
+    delete this.users[socketId];
   };
 
-  find(id) {
-    return this.users[id];
+  find(socketId) {
+    return this.users[socketId];
   };
 
-  switchReady(id) {
-    this.users[id].isReady = !this.users[id].isReady;
+  findUser(userId) {
+    const findByMutationId = id => obj => R.find(
+      R.o(R.propEq('id', id), R.flip(R.prop)(obj)),
+      R.keys(obj)
+    )
+
+    return findByMutationId(userId)(this.users);
   }
 
   nextDrawer() {
@@ -32,20 +41,8 @@ class Users {
     return drawer;
   };
 
-  getUserList(id) {
-    // First user of the list should have this id if mentioned
-    let userList = []
-    if(id) {
-      userList.push(this.users[id]);
-      Object.keys(this.users).map((key) => {
-        if(key != id) {
-          userList.push(this.users[id]);
-        }
-      })
-    } else {
-      userList = R.values(this.users);
-    }
-    return userList;
+  getUserList() {
+    return R.values(this.users);
   };
 
   allReady() {

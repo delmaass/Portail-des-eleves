@@ -7,6 +7,4 @@ class User {
   }
 };
 
-User.prototype.usedImage = [];
-
 module.exports = User;

@@ -14,6 +14,10 @@ class SocketService extends React.Component {
         this.socket = io.connect(PICTIONARY_SERVER_URL);
     }
 
+    disconnect() {
+        this.socket.emit("disconnect");
+    }
+
     toObservable(eventName: string): Observable<any> {
         return new Observable((subscriber: Subscriber<any>) => {
           this.socket.on(eventName, (data) => subscriber.next(data));

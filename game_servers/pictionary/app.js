@@ -39,12 +39,7 @@ io.use(function(socket, next){
 
   // Get logged-in user and set as a new user
   let userId = socket.decoded.user;
-
-  if(!game.users.find(userId)) {
-    game.newUser(userId);
-  } else if (!game.userId) {
-    game.userId = userId;
-  }
+  game.newUser(userId);
 
   // Drawing
   socket.on('drawing:clear', () => drawing.onClear());
@@ -85,7 +80,7 @@ io.use(function(socket, next){
   });
   
   // Disconnect
-  socket.on('disconnect', () => game.userQuit(userId));
+  socket.on('disconnect', () => game.userQuit());
 });
 
 
