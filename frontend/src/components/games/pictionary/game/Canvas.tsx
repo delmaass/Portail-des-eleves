@@ -12,7 +12,7 @@ export const Canvas = ({paperService, isDrawer, ...props}) => {
         paperService.eraser();
     }
 
-    const usePencil = () => {
+    const pencil = () => {
         paperService.pencil();
     }
 
@@ -22,6 +22,7 @@ export const Canvas = ({paperService, isDrawer, ...props}) => {
         if(isDrawer) {
             paperService.enableDrawing();
         }
+        pencil();
         
         return () => {
             paperService.reset();
@@ -35,7 +36,7 @@ export const Canvas = ({paperService, isDrawer, ...props}) => {
                 <div className="d-flex gap-2 w-100">
                     <Button variant="danger" onClick={clearPaper}>Tout effacer</Button>
                     <Button variant="secondary" onClick={useEraser}>Gomme</Button>
-                    <Button variant="primary" onClick={usePencil}>Crayon</Button>
+                    <Button variant="primary" onClick={pencil}>Crayon</Button>
                 </div>
             ) : "" }
         </div>

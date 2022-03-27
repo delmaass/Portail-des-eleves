@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+let interval;
 
 export const Counter = ({time}) => {
-    return (
+    const [timeLeft, setTimeLeft] = useState(time);
+
+    if(timeLeft <= 0) {
+        clearInterval(interval);
+        setTimeLeft(0);
+    }
+
+    useEffect(() => {
+        interval = setInterval(() => setTimeLeft(timeLeft => timeLeft - 1), 1000)
+    }, []);
+
+    return timeLeft ? (
         <div>
-            Il reste <b>{ ""+time }</b> secondes.
+            Il reste <b>{ ""+timeLeft }</b> secondes.
         </div>
-    )
+    ) : <></>;
 }

@@ -110,7 +110,7 @@ module.exports = class Game {
     
     this.game.interval = setInterval(() => {
       time = time - 1;
-      this.io.emit('game:timeLeft', time);
+      // this.io.emit('game:timeLeft', time);
     }, 1000);
   }
 }
