@@ -17,7 +17,7 @@ interface GameProps {
 // let paperService;
 
 export const Game = ({answer, timeLeft, isDrawer, paperService, chatService}: GameProps) => (
-    <Container>
+    <Container className="border rounded-3 border-black p-5">
         {answer && isDrawer ? (<Answer answer={answer} end={false} />) : ""}
         {timeLeft ? (<Counter time={timeLeft} />) : ""}
         <Canvas isDrawer={isDrawer} paperService={paperService}/>

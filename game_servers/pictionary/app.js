@@ -72,12 +72,12 @@ io.use(function(socket, next){
   // Chat
   socket.on('chat:newMessage', (msg) => {
     let user = game.users.find(socket.id);
+    msg = msg.toLowerCase();
     if (game.game.match(msg)) {
       user.score += 1;
-      // game.gameEnd(user);
-    } else {
-      socket.broadcast.emit('chat:newMessage', { user: user, message: msg });
+      msg = "*****";
     }
+    io.emit('chat:newMessage', { user: user.name, message: msg });
   });
   
   // Disconnect
