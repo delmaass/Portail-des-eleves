@@ -1,7 +1,7 @@
 import React from "react";
 
-export const Answer = ({answer}) => (
+export const Answer = ({answer, end}) => (
     <div>
-        Le mot est : <b>{""+answer}</b>
+        Le mot {end ? "était" : "est"} : <b>{""+answer}</b>
     </div>
 )

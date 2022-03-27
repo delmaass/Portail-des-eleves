@@ -45,11 +45,11 @@ module.exports = class Game {
     this.io.to(drawerId).emit('game:answer', this.game.answer);
   }
 
-  gameEnd(winner) {
+  gameEnd() {
     this.users.unReadyAll();
     this.game.end();
     clearInterval(this.game.interval);
-    this.io.emit('game:end', { user: winner, message: `Answer is ${this.game.answer}` });
+    this.io.emit('game:end', this.game.answer);
   }
 
   getDrawerId() {

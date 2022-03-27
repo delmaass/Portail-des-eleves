@@ -1,13 +1,14 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { PaperService, SocketService } from "../services/services";
+import { PaperService, ChatService } from "../services/services";
 import { Canvas } from "./Canvas";
-import { Loading } from "../../../utils/Loading"
 import { Answer } from "./Answer";
 import { Counter } from "./Counter";
+import { Chat } from "./Chat";
 
 interface GameProps {
     paperService: PaperService;
+    chatService: ChatService;
     answer?: string;
     timeLeft?: number;
     isDrawer?: boolean
@@ -15,11 +16,11 @@ interface GameProps {
 
 // let paperService;
 
-export const Game = ({answer, timeLeft, isDrawer, paperService}: GameProps) => (
+export const Game = ({answer, timeLeft, isDrawer, paperService, chatService}: GameProps) => (
     <Container>
-        {answer ? (<Answer answer={answer} />) : ""}
+        {answer && isDrawer ? (<Answer answer={answer} end={false} />) : ""}
         {timeLeft ? (<Counter time={timeLeft} />) : ""}
         <Canvas isDrawer={isDrawer} paperService={paperService}/>
-        {/* <Chat /> */}
+        <Chat chatService={chatService}/>
     </Container>
 )

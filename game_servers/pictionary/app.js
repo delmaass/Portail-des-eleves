@@ -71,11 +71,12 @@ io.use(function(socket, next){
 
   // Chat
   socket.on('chat:newMessage', (msg) => {
+    let user = game.users.find(socket.id);
     if (game.game.match(msg)) {
-      game.user.score += 1;
-      game.gameEnd(game.user);
+      user.score += 1;
+      // game.gameEnd(user);
     } else {
-      socket.broadcast.emit('chat:newMessage', { user: game.user, message: msg });
+      socket.broadcast.emit('chat:newMessage', { user: user, message: msg });
     }
   });
   
