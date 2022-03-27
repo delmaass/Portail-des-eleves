@@ -7,14 +7,13 @@ export const Counter = ({time}) => {
 
     if(timeLeft <= 0) {
         clearInterval(interval);
-        setTimeLeft(0);
     }
 
     useEffect(() => {
         interval = setInterval(() => setTimeLeft(timeLeft => timeLeft - 1), 1000)
     }, []);
 
-    return timeLeft ? (
+    return timeLeft > 0 ? (
         <div>
             Il reste <b>{ ""+timeLeft }</b> secondes.
         </div>

@@ -21,6 +21,12 @@ export const Chat = ({chatService} : {chatService: ChatService}) => {
         }
     }
 
+    const handleEnterMessage = (e) => {
+        if(e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
     useEffect(() => {
         chatService.onNewMessage().subscribe((msg: Message) => setMessages(messages => [msg, ...messages]));
 
@@ -40,8 +46,8 @@ export const Chat = ({chatService} : {chatService: ChatService}) => {
                 )) : ""}
             </ul>
             <div className="d-flex w-100">
-                <input type="text" name="message" id="message" className="mr-2"/>
-                <Button variant="primary" onClick={sendMessage} />
+                <input type="text" name="message" id="message" className="mr-2" onKeyDown={handleEnterMessage}/>
+                <Button variant="primary" onClick={sendMessage}>OK</Button>
             </div>
         </div>
     );
