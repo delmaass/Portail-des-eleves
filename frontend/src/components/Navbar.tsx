@@ -27,7 +27,7 @@ const links = [
   { icon: "zap", url: "/associations", label: "Associations" },
   { icon: "check-square", url: "/sondages", label: "Sondages" },
   { icon: "book-open", url: "/cours", label: "Cours" },
-  { icon: "crosshair", url: "/games", label: "Jeux"}
+  { icon: "crosshair", url: "/games", label: "Jeux" },
 ];
 
 function Navbar() {

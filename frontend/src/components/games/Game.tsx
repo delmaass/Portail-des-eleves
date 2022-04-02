@@ -9,31 +9,33 @@ import { PageTitle } from "../utils/PageTitle";
 import { GameSidebar } from "./Sidebar";
 
 export const GameLayout = () => {
-    const { gameId } = useParams<{ gameId: string }>();
+  const { gameId } = useParams<{ gameId: string }>();
 
-    const { data: game, status, error } = useBetterQuery<Game>(
-        ["api.games.get", gameId],
-        api.games.get,
-        { refetchOnWindowFocus: false }
-    );
+  const { data: game, status, error } = useBetterQuery<Game>(
+    ["api.games.get", gameId],
+    api.games.get,
+    { refetchOnWindowFocus: false }
+  );
 
-    return status === "loading" ? (
-        <>
-            <Loading />
-        </>
-      ) : status === "error" ? (
-        <ErrorPage>{error}</ErrorPage>
-      ) : game ? (
-        <Container className="mt-5">
-            <Row>
-                <Col md="3">
-                    <GameSidebar gameId={game.id}/>
-                </Col>
-                <Col md="9">
-                    <PageTitle>{game.name}</PageTitle>
-                    GameContainer
-                </Col>
-            </Row>
-        </Container>
-    ) : "";
-}   
+  return status === "loading" ? (
+    <>
+      <Loading />
+    </>
+  ) : status === "error" ? (
+    <ErrorPage>{error}</ErrorPage>
+  ) : game ? (
+    <Container className="mt-5">
+      <Row>
+        <Col md="3">
+          <GameSidebar gameId={game.id} />
+        </Col>
+        <Col md="9">
+          <PageTitle>{game.name}</PageTitle>
+          GameContainer
+        </Col>
+      </Row>
+    </Container>
+  ) : (
+    ""
+  );
+};

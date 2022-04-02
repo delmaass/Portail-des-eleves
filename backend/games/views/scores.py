@@ -5,7 +5,11 @@ from django.db.models.functions import Coalesce
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework import pagination, mixins, viewsets
 from authentication.models.user import User
-from games.serializers.scores import ScoreSerializer, LeaderboardSerializer, CreateScoreSerializer
+from games.serializers.scores import (
+    ScoreSerializer,
+    LeaderboardSerializer,
+    CreateScoreSerializer,
+)
 from games.models.game import Game
 
 from games.models.scores import Score

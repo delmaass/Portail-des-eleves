@@ -5,40 +5,40 @@ import { api } from "../../services/apiService";
 import { PageTitle } from "../utils/PageTitle";
 import { Pagination } from "../utils/Pagination";
 import { GameSidebar } from "./Sidebar";
-import './games.css';
+import "./games.css";
 
 export const GamesList = () => (
-    <Container className="mt-5">
+  <Container className="mt-5">
     <Row>
-        <Col md="3">
-            <GameSidebar />
-        </Col>
-        <Col md="9">
-            <PageTitle>Jeux</PageTitle>
-            <Pagination
-                apiKey={["api.games.list"]}
-                apiMethod={api.games.list}
-                render={(games, paginationControl) => (
+      <Col md="3">
+        <GameSidebar />
+      </Col>
+      <Col md="9">
+        <PageTitle>Jeux</PageTitle>
+        <Pagination
+          apiKey={["api.games.list"]}
+          apiMethod={api.games.list}
+          render={(games, paginationControl) => (
             <>
               <Row>
                 {games.map((game) => (
                   <Card key={game.id} className={"m-4"}>
                     <Card.Header className="overflow-hidden img-preview">
-                        <Card.Img
-                            variant="top"
-                            src={`/games/${game.id}.jpg`}
-                            className="w-100 img-fluid"
-                        />
+                      <Card.Img
+                        variant="top"
+                        src={`/games/${game.id}.jpg`}
+                        className="w-100 img-fluid"
+                      />
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title>{game.name}</Card.Title>
-                        <Card.Subtitle>{game.mode == "S" ? "Un seul joueur" : "Mulitjoueur"}</Card.Subtitle>
-                        <Card.Text>
-                            {game.description}
-                        </Card.Text>
-                        <Link to={`/games/${game.id}/`}>
-                            <Button variant="primary">Jouer</Button>
-                        </Link>
+                      <Card.Title>{game.name}</Card.Title>
+                      <Card.Subtitle>
+                        {game.mode == "S" ? "Un seul joueur" : "Mulitjoueur"}
+                      </Card.Subtitle>
+                      <Card.Text>{game.description}</Card.Text>
+                      <Link to={`/games/${game.id}/`}>
+                        <Button variant="primary">Jouer</Button>
+                      </Link>
                     </Card.Body>
                   </Card>
                 ))}
@@ -47,7 +47,7 @@ export const GamesList = () => (
             </>
           )}
         />
-        </Col>
+      </Col>
     </Row>
-</Container>
-)
+  </Container>
+);

@@ -21,9 +21,7 @@ class GameFilter(django_filters.FilterSet):
 
 
 class GameViewSet(
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    viewsets.GenericViewSet,
+    mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
 ):
     queryset = Game.objects.all()
     filterset_class = GameFilter
